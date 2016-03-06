@@ -1,6 +1,7 @@
 /*global
 chrome
 */
+
 (function(){
 
 	var isRedacted = true;
@@ -22,7 +23,6 @@ chrome
 			}
 		});
 	}
-
 
 	chrome.extension.onMessage.addListener(function (request, sender, sendResponse) {
 		switch (request.functiontoInvoke) {

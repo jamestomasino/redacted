@@ -3,7 +3,13 @@ chrome
 */
 
 function save_options() {
-	var redacted = [document.getElementById('redact_list').value];
+	var inp = document.getElementById('redact_list').childNodes;
+	var redacted = [];
+
+	for (var i=0; i < inp.length; i++) {
+		if (inp[i].value) redacted.push (inp[i].value);
+	}
+
 	chrome.storage.sync.set({
 		"redactPatterns": redacted
 	}, function() {
@@ -15,15 +21,29 @@ function save_options() {
 	});
 }
 
-// Restores select box and checkbox state using the preferences
-// stored in chrome.storage.
 function restore_options() {
-	// Use default value color = 'red' and likesColor = true.
 	chrome.storage.sync.get({
-		redactPatterns: ['trump']
+		redactPatterns: ['trump', 'donald']
 	}, function(items) {
-		document.getElementById('redact_list').value = items.redactPatterns[0];
+		var list = document.getElementById('redact_list');
+		for (var i=0; i < items.redactPatterns.length; i++) {
+			if (items.redactPatterns[i]) {
+				var inp = createEl('<input value="' + items.redactPatterns[i] + '">');
+				list.appendChild(inp);
+			}
+		}
 	});
 }
+
+function createEl ( str ) {
+	var frag = document.createDocumentFragment();
+	var elem = document.createElement('div');
+	elem.innerHTML = str;
+	while (elem.childNodes[0]) {
+		frag.appendChild(elem.childNodes[0]);
+	}
+	return frag;
+};
+
 document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById('save').addEventListener('click', save_options);

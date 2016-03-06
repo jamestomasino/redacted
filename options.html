@@ -3,23 +3,41 @@
 	<head>
 		<title>Redacted Extension Options</title>
 		<style>
-			body: { padding: 10px; }
+			body {
+				padding: 10px;
+			}
+
+			input {
+				display: block;
+				margin-bottom: 5px !important;
+				width: 300px;
+			}
+
+			#redact_list, code {
+				padding: 10px 10px 20px 10px;
+			}
 		</style>
 	</head>
 
 	<body>
-		<p>Redact can eliminate any unwanted text from your browsing experience. Using
-		the list below, add patterns you'd like to redact. The patterns can be simple
-		strings (case doesn't matter):</p>
-		<code>trump<code>
-		<p>It also supports regular expressions:</p>
-		<code>(donald)?(\)?(j|john|j.)?\ ?trump</code>
+		<p>Redact can eliminate any unwanted text from your browsing
+		experience. Using the list below, add patterns you'd like to redact.
+		The patterns can be simple strings (case doesn't matter):</p>
 
-		<p>Redact the following patterns:<br>
-			<input id="redact_list">
-			<div id="status"></div>
-			<button id="save">Save</button>
-		</p>
+		<code>trump</code>
+
+		<p>It also supports regular expressions:</p>
+
+		<code>(donald)?(\ )?(j|john|j.)?\ ?trump</code>
+
+		<p>Redact the following patterns:</p>
+
+		<div id="redact_list">
+		</div>
+
+		<div id="status"></div>
+		<button id="save">Save</button>
+
 		<script src="options.js"></script>
 	</body>
 </html>
