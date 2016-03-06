@@ -28,14 +28,20 @@ function restore_options() {
 		var list = document.getElementById('redact_list');
 		for (var i=0; i < items.redactPatterns.length; i++) {
 			if (items.redactPatterns[i]) {
-				var inp = createEl('<input value="' + items.redactPatterns[i] + '">');
+				var inp = create_element('<input value="' + items.redactPatterns[i] + '">');
 				list.appendChild(inp);
 			}
 		}
 	});
 }
 
-function createEl ( str ) {
+function add_pattern () {
+	var list = document.getElementById('redact_list');
+	var inp = create_element('<input>');
+	list.appendChild(inp);
+}
+
+function create_element ( str ) {
 	var frag = document.createDocumentFragment();
 	var elem = document.createElement('div');
 	elem.innerHTML = str;
@@ -47,3 +53,4 @@ function createEl ( str ) {
 
 document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById('save').addEventListener('click', save_options);
+document.getElementById('plus').addEventListener('click', add_pattern);
