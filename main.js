@@ -5,7 +5,7 @@ chrome
 
 	var isRedacted = true;
 	var redactedOptions = {
-		"redactPatterns": ["trump"]
+		"redactPatterns": ['trump']
 	};
 
 	function setRedactedOptions ( myOptions ) {
