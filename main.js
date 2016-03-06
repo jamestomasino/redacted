@@ -1,6 +1,28 @@
+/*global
+chrome
+*/
 (function(){
 
 	var isRedacted = true;
+	var redactedOptions = {
+		"redactPatterns": ["trump"]
+	};
+
+	function setRedactedOptions ( myOptions ) {
+		chrome.storage.sync.clear(function () {
+			chrome.storage.sync.set(redactedOptions, function() {});
+		});
+	}
+
+	function getRedactedOptions ( text ) {
+		chrome.storage.sync.get(null, function ( myOptions ) {
+			redactedOptions = myOptions || redactedOptions;
+			if(isRedacted) {
+				redact();
+			}
+		});
+	}
+
 
 	chrome.extension.onMessage.addListener(function (request, sender, sendResponse) {
 		switch (request.functiontoInvoke) {
@@ -59,15 +81,21 @@
 	};
 
 	$(document).ready(function() {
-		redact();
+		getRedactedOptions();
 	});
 
 	function redact() {
-		$('body').redact("trump");
+		var r = redactedOptions.redactPatterns;
+		for (var i=0; i < r.length; ++i) {
+			$('body').redact(r[i]);
+		}
 	}
 
 	function unRedact() {
-		$('body').unredact("trump");
+		var r = redactedOptions.redactPatterns;
+		for (var i=0; i < r.length; ++i) {
+			$('body').unredact(r[i]);
+		}
 	}
 
 })();
